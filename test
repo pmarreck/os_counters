@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Run the counter test suite. Default backend: fs (cross-platform, no sudo).
+#   ./test                    # fs-counter
+#   COUNTER_TYPE=posix ./test # posix-counter (best on Linux; limited on macOS)
+#   COUNTER_TYPE=sysv  ./test # sysv-counter (needs passwordless sudo; skips cleanly otherwise)
+set -euo pipefail
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export PATH="$here/bin:$PATH"
+export COUNTER_TEST_FILE="$here/tests/counter_test"
+export COUNTER_TYPE="${COUNTER_TYPE:-fs}"
+exec "$here/tests/counter_test" "$@"
